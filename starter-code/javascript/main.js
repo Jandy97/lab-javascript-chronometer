@@ -8,17 +8,21 @@ var secUni      = document.getElementById('secUni');
 var milDec      = document.getElementById('milDec');
 var milUni      = document.getElementById('milUni');
 
+var interval 
 
 function printTime() {
-
+    printMinutes()
+    printSeconds()
 }
 
 function printMinutes() {
-
+    minDec.innerText = chronometer.minutes[0]
+    minUni.innerText = chronometer.minutes[1]
 }
 
 function printSeconds() {
-
+    secDec.innerText = chronometer.seconds[0]
+    secUni.innerText = chronometer.seconds[1]
 }
 
 function printMilliseconds() {
@@ -34,7 +38,7 @@ function clearSplits() {
 }
 
 function setStopBtn() {
-
+    chronometer.stopClick()
 }
 
 function setSplitBtn() {
@@ -42,19 +46,43 @@ function setSplitBtn() {
 }
 
 function setStartBtn() {
-
+    chronometer.startClick()
+    interval = setInterval(function(){
+        printTime()
+    }, 1000)
 }
 
 function setResetBtn() {
-
+    chronometer.resetClick()
+    clearInterval(interval)
 }
 
 // Start/Stop Button
 btnLeft.addEventListener('click', function () {
-
+    if(btnLeft.className == "btn start"){
+        btnLeft.className = "btn stop"
+        btnLeft.innerText = "STOP"
+        btnRight.className = "btn split"
+        btnRight.innerText = "Split"
+        setStartBtn()
+    }else{
+        btnLeft.className = "btn start"
+        btnLeft.innerText = "START"
+        btnRight.className = "btn reset"
+        btnRight.innerText = "Reset"
+        setStopBtn()
+    }
 });
 
 // Reset/Split Button
 btnRight.addEventListener('click', function () {
-
+    if(btnLeft.className == "btn start"){
+        minDec.innerText = 0
+        minUni.innerText = 0
+        secDec.innerText = 0
+        secUni.innerText = 0
+        setResetBtn()
+    }else{
+        //stopReset
+    }
 });
